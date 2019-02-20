@@ -26,7 +26,7 @@ public class AdminController {
     @ApiOperation(value = "初始化项目")
     @PostMapping("/init")
     public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
-        String dataUrl = BuildConstant.BUILD_PATH
+        String dataUrl = BuildConstant.DATA_PATH
                 .replace("IP", initBO.getIp())
                 .replace("PORT", initBO.getProt().toString())
                 .replace("DATABASE", initBO.getDataBase());
