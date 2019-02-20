@@ -36,6 +36,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         project.setBuildState(BuildState.INIT.value());
         project.setCreateTime(LocalDateTime.now());
         project.setUpdateTime(LocalDateTime.now());
+        this.save(project);
         return project;
     }
 }

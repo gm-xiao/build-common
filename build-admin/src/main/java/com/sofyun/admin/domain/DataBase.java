@@ -29,6 +29,14 @@ public class DataBase implements Serializable {
     @TableId("id")
     private String id;
 
+    @ApiModelProperty(value = "数据库名称")
+    @TableField("name")
+    private String name;
+
+    @ApiModelProperty(value = "英文简称")
+    @TableField("en_name")
+    private String enName;
+
     @ApiModelProperty(value = "数据库IP地址")
     @TableField("ip")
     private String ip;

@@ -1,5 +1,6 @@
 package com.sofyun.core.util;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -16,11 +17,11 @@ import java.sql.Statement;
  **/
 public class DBUtils {
 
-    public static void createDataBase(String url, String name, String user, String pwd){
+    @Async
+    public void createDataBase(String url, String name){
         Connection conn = null;
         Statement stat = null;
         try {
-            url += "?user=" + user + "&password=" + pwd + "&characterEncoding=UTF8";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url);
             stat = conn.createStatement();
@@ -29,6 +30,7 @@ public class DBUtils {
             stat.execute(sql);
 
             sql = "create database " + name + " CHARACTER SET UTF8";
+
             stat.execute(sql);
 
         } catch (Exception e) {

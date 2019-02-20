@@ -33,8 +33,8 @@ public class ProjectController {
 
     @ApiOperation(value = "获取项目对象")
     @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "String", paramType = "query")
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseBo<Project>> json(@PathVariable("id") String id){
+    @GetMapping("/json")
+    public ResponseEntity<ResponseBo<Project>> json(String id){
         Project project = projectService.getById(id);
         ResponseBo<Project> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());

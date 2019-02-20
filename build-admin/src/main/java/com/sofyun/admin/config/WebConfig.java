@@ -1,5 +1,6 @@
 package com.sofyun.admin.config;
 
+import com.sofyun.core.util.DBUtils;
 import com.sofyun.core.util.IdUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,11 @@ public class WebConfig  implements WebMvcConfigurer {
     @Bean
     public IdUtils getIdUtils(){
         return new IdUtils(0,0);
+    }
+
+    @Bean
+    public DBUtils getDBUtils(){
+        return new DBUtils();
     }
 
 }

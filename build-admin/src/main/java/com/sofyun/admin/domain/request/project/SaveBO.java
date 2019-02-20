@@ -19,19 +19,19 @@ public class SaveBO implements Serializable {
 
     private static final long serialVersionUID = -2563237834573654635L;
 
-    @ApiModelProperty(value = "项目名称")
+    @ApiModelProperty(value = "项目名称", required = true)
     private String name;
 
-    @ApiModelProperty(value = "英文简称")
+    @ApiModelProperty(value = "英文简称", required = true)
     private String enName;
 
-    @ApiModelProperty(value = "所属人")
+    @ApiModelProperty(value = "所属人", required = true)
     private String ownerName;
 
-    @ApiModelProperty(value = "项目说明")
+    @ApiModelProperty(value = "项目说明", required = true)
     private String remark;
 
-    @ApiModelProperty(value = "模板ID")
+    @ApiModelProperty(value = "模板ID", required = true)
     private String template;
 
 }
