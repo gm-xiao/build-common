@@ -2,6 +2,7 @@ package com.sofyun.admin.service;
 
 import com.sofyun.admin.domain.DataTable;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sofyun.admin.domain.request.datatable.SaveBO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DataTableService extends IService<DataTable> {
 
+    DataTable insert(SaveBO saveBO);
 }

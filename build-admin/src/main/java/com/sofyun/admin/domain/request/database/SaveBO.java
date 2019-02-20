@@ -1,6 +1,7 @@
 package com.sofyun.admin.domain.request.database;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @Version 1.0
  **/
 @Data
+@ApiModel(value="保存数据库信息", description="保存数据库信息")
 public class SaveBO implements Serializable {
     private static final long serialVersionUID = -7132948617603506741L;
 

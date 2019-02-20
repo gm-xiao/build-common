@@ -2,6 +2,7 @@ package com.sofyun.admin.service;
 
 import com.sofyun.admin.domain.DataColumn;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sofyun.admin.domain.request.datacolumn.SaveBO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DataColumnService extends IService<DataColumn> {
 
+    DataColumn insert(SaveBO saveBO);
 }
