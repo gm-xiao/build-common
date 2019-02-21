@@ -2,6 +2,7 @@ package com.sofyun.admin.web;
 
 
 import com.sofyun.admin.domain.DataBase;
+import com.sofyun.admin.domain.request.database.InitBO;
 import com.sofyun.admin.domain.request.database.SaveBO;
 import com.sofyun.admin.domain.response.database.DataBaseVO;
 import com.sofyun.admin.service.DataBaseService;
@@ -12,7 +13,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +56,17 @@ public class DataBaseController {
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());
         responseBo.setData(dataBaseVO);
+        return ResponseEntity.ok(responseBo);
+    }
+
+    @ApiOperation(value = "初始化数据库")
+    @PostMapping("/init")
+    public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
+        dataBaseService.init(initBO);
+        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+        responseBo.setCode(Status.SUCCESS.getCode());
+        responseBo.setMsg(Status.SUCCESS.getMessage());
+        responseBo.setData(true);
         return ResponseEntity.ok(responseBo);
     }
 

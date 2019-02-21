@@ -2,7 +2,9 @@ package com.sofyun.admin.service;
 
 import com.sofyun.admin.domain.DataBase;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sofyun.admin.domain.request.database.InitBO;
 import com.sofyun.admin.domain.request.database.SaveBO;
+import com.sofyun.core.exception.BaseException;
 
 /**
  * <p>
@@ -20,5 +22,7 @@ public interface DataBaseService extends IService<DataBase> {
      * @return
      */
     DataBase insert(SaveBO saveBO);
+
+    void init(InitBO initBO) throws BaseException;
 
 }

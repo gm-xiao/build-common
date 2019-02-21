@@ -1,16 +1,28 @@
 package com.sofyun.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sofyun.admin.domain.DataBase;
+import com.sofyun.admin.domain.DataColumn;
+import com.sofyun.admin.domain.DataTable;
+import com.sofyun.admin.domain.request.database.InitBO;
 import com.sofyun.admin.domain.request.database.SaveBO;
 import com.sofyun.admin.mapper.DataBaseMapper;
 import com.sofyun.admin.service.DataBaseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sofyun.admin.service.DataColumnService;
+import com.sofyun.admin.service.DataTableService;
 import com.sofyun.core.constant.BuildConstant;
+import com.sofyun.core.constant.Status;
+import com.sofyun.core.exception.BaseException;
+import com.sofyun.core.util.DBModel;
 import com.sofyun.core.util.DBUtils;
 import com.sofyun.core.util.IdUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -29,19 +41,68 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
     @Autowired
     private DBUtils dbUtils;
 
+    @Autowired
+    private DataBaseMapper dataBaseMapper;
+
+    @Autowired
+    private DataTableService dataTableService;
+
+    @Autowired
+    private DataColumnService dataColumnService;
+
+
     @Override
     public DataBase insert(SaveBO saveBO) {
         DataBase dataBase = new DataBase();
         BeanUtils.copyProperties(saveBO, dataBase);
         dataBase.setId(idUtils.create());
-        if (this.save(dataBase)){
-            String jdbcUrl = BuildConstant.JDBC_DATA_PATH
-                    .replace("IP", dataBase.getIp())
-                    .replace("PORT", dataBase.getPort().toString())
-                    .replace("USER", dataBase.getUsername())
-                    .replace("PWD", dataBase.getPassword());
-            dbUtils.createDataBase(jdbcUrl, dataBase.getEnName());
-        }
         return dataBase;
+    }
+
+    @Override
+    public void init(InitBO initBO) throws BaseException {
+
+        // 1.获取数据库信息
+        DataBase dataBase = dataBaseMapper.selectById(initBO.getId());
+        if (null == dataBase){
+            throw new BaseException(Status.ERROR.getCode(), "参数错误");
+        }
+
+        // 2.获取数据表信息
+        DataTable dataTable = new DataTable();
+        dataTable.setDataBase(initBO.getId());
+        List<DataTable> dataTables = dataTableService.list(dataTable);
+
+
+        // 3.获取表字段信息
+        for (DataTable table : dataTables){
+            QueryWrapper<DataColumn> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("table_id", dataTable.getId());
+            List<DataColumn> dataColumns = dataColumnService.list(queryWrapper);
+            dataTable.setDataColumns(dataColumns);
+        }
+
+        // 4.组合数据库对象
+        DBModel model = new DBModel();
+        BeanUtils.copyProperties(dataBase, model);
+        List<DBModel.Table> tables = new ArrayList<>();
+        for (DataTable tem : dataTables){
+            DBModel.Table table = new DBModel.Table();
+            table.setName(tem.getName());
+            table.setEnName(tem.getEnName());
+            List<DBModel.Column> columns = new ArrayList<>();
+            for (DataColumn dataColumn : tem.getDataColumns()){
+                DBModel.Column column = new DBModel.Column();
+                BeanUtils.copyProperties(dataColumn, column);
+                columns.add(column);
+            }
+            table.setColumns(columns);
+            tables.add(table);
+        }
+        model.setTables(tables);
+
+        // 5.初始化数据库
+
+
     }
 }

@@ -83,7 +83,7 @@ public class DataTableController {
     }
 
     @ApiOperation(value = "删除数据库表")
-    @PostMapping("/update")
+    @PostMapping("/delete")
     public ResponseEntity<ResponseBo<Boolean>> delete(@RequestBody DeleteBO deleteBO){
         dataTableService.delete(deleteBO);
         ResponseBo<Boolean> responseBo = new ResponseBo<>();

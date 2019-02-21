@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,5 +43,8 @@ public class DataTable implements Serializable {
     @TableField("data_base")
     private String dataBase;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "表字段" )
+    private List<DataColumn> dataColumns;
 
 }

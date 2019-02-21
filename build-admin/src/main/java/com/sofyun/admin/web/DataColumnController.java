@@ -51,7 +51,7 @@ public class DataColumnController {
     @GetMapping("/listColumn")
     public ResponseEntity<ResponseBo<List<DataColumn>>> listColumn(String table){
         QueryWrapper<DataColumn> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("table", table);
+        queryWrapper.eq("data_table", table);
         List<DataColumn> dataColumns = dataColumnService.list(queryWrapper);
         ResponseBo<List<DataColumn>> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());

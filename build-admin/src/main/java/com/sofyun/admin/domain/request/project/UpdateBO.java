@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @Version 1.0
  **/
 @Data
-@ApiModel(value="保存项目信息", description="保存项目信息")
+@ApiModel(value="更新项目信息", description="更新项目信息")
 public class UpdateBO implements Serializable {
 
     private static final long serialVersionUID = -2563237834573654635L;

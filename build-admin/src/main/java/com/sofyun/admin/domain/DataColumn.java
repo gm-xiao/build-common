@@ -38,24 +38,24 @@ public class DataColumn implements Serializable {
     private String enName;
 
     @ApiModelProperty(value = "数据表")
-    @TableField("table")
-    private String table;
+    @TableField("data_table")
+    private String dataTable;
 
     @ApiModelProperty(value = "长度")
-    @TableField("precision")
-    private Integer precision;
+    @TableField("length")
+    private Integer length;
 
     @ApiModelProperty(value = "小数点")
     @TableField("scale")
     private Integer scale;
 
     @ApiModelProperty(value = "是否唯一(0.否 1.是)")
-    @TableField("unique")
-    private String unique;
+    @TableField("is_unique")
+    private String isUnique;
 
     @ApiModelProperty(value = "是否为空（0.否 1.是）")
-    @TableField("nullable")
-    private String nullable;
+    @TableField("is_nullable")
+    private String isNullable;
 
     @ApiModelProperty(value = "字段类型")
     @TableField("type")

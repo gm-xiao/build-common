@@ -3,8 +3,11 @@ package com.sofyun.admin.service;
 import com.sofyun.admin.domain.DataTable;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sofyun.admin.domain.request.DeleteBO;
+import com.sofyun.admin.domain.request.QueryBO;
 import com.sofyun.admin.domain.request.datatable.SaveBO;
 import com.sofyun.admin.domain.request.datatable.UpdateBO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -21,4 +24,8 @@ public interface DataTableService extends IService<DataTable> {
     DataTable update(UpdateBO updateBO);
 
     void delete(DeleteBO deleteBO);
+
+    List<DataTable> list(DataTable dataTable);
+
+    List<DataTable> list(QueryBO queryBO);
 }

@@ -27,19 +27,19 @@ public class SaveBO implements Serializable {
     private String enName;
 
     @ApiModelProperty(value = "数据表")
-    private String table;
+    private String dataTable;
 
     @ApiModelProperty(value = "长度")
-    private Integer precision;
+    private Integer length;
 
     @ApiModelProperty(value = "小数点")
     private Integer scale;
 
     @ApiModelProperty(value = "是否唯一(0.否 1.是)")
-    private String unique;
+    private String isUnique;
 
     @ApiModelProperty(value = "是否为空(0.否 1.是)")
-    private String nullable;
+    private String isNullable;
 
     @ApiModelProperty(value = "字段类型")
     private String type;
