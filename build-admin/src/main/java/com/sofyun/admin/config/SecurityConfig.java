@@ -97,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/configuration/security").permitAll()
                 .antMatchers("/admin/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
         httpSecurity.headers().cacheControl();
         httpSecurity.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);

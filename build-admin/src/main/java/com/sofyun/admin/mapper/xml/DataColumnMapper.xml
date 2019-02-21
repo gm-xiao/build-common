@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sofyun.admin.mapper.DataColumnMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sofyun.admin.domain.DataColumn">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="en_name" property="enName" />
+        <result column="table" property="table" />
+        <result column="precision" property="precision" />
+        <result column="scale" property="scale" />
+        <result column="unique" property="unique" />
+        <result column="nullable" property="nullable" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, en_name, table, precision, scale, unique, nullable, type
+    </sql>
+
+</mapper>

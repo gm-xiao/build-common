@@ -17,6 +17,8 @@ public class BuildConstant implements Serializable {
 
     public final static String DATA_PATH = "jdbc:mysql://IP:PORT/DATABASE?useUnicode=true&useSSL=false&characterEncoding=utf8";
 
+    public final static String JDBC_DATA_PATH = "jdbc:mysql://IP:PORT/?user=USER&password=PWD&useUnicode=true&useSSL=false&characterEncoding=utf8";
+
 
 
 }
