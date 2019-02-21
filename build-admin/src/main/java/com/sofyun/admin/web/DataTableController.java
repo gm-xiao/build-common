@@ -62,12 +62,12 @@ public class DataTableController {
 
     @ApiOperation(value = "保存数据库表")
     @PostMapping("/save")
-    public ResponseEntity<ResponseBo<Boolean>> save(@RequestBody SaveBO saveBO){
-        dataTableService.insert(saveBO);
-        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+    public ResponseEntity<ResponseBo<DataTable>> save(@RequestBody SaveBO saveBO){
+        DataTable dataTable = dataTableService.insert(saveBO);
+        ResponseBo<DataTable> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());
-        responseBo.setData(true);
+        responseBo.setData(dataTable);
         return ResponseEntity.ok(responseBo);
     }
 

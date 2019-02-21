@@ -49,7 +49,7 @@ public class DataColumn implements Serializable {
     @TableField("scale")
     private Integer scale;
 
-    @ApiModelProperty(value = "是否唯一(0.否 1.是)")
+    @ApiModelProperty(value = "是否唯一(0.不唯一 1.唯一)")
     @TableField("is_unique")
     private String isUnique;
 

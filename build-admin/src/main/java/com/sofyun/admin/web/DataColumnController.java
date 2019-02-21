@@ -63,12 +63,12 @@ public class DataColumnController {
 
     @ApiOperation(value = "保存数据库表字段")
     @PostMapping("/save")
-    public ResponseEntity<ResponseBo<Boolean>> save(@RequestBody SaveBO saveBO){
-        dataColumnService.insert(saveBO);
-        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+    public ResponseEntity<ResponseBo<DataColumn>> save(@RequestBody SaveBO saveBO){
+        DataColumn dataColumn = dataColumnService.insert(saveBO);
+        ResponseBo<DataColumn> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());
-        responseBo.setData(true);
+        responseBo.setData(dataColumn);
         return ResponseEntity.ok(responseBo);
     }
 

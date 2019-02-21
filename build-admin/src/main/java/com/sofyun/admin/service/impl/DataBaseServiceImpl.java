@@ -56,6 +56,7 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
         DataBase dataBase = new DataBase();
         BeanUtils.copyProperties(saveBO, dataBase);
         dataBase.setId(idUtils.create());
+        this.save(dataBase);
         return dataBase;
     }
 

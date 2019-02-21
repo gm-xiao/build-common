@@ -1,12 +1,15 @@
 package com.sofyun.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sofyun.admin.domain.DataColumn;
 import com.sofyun.admin.domain.DataTable;
 import com.sofyun.admin.domain.request.DeleteBO;
 import com.sofyun.admin.domain.request.QueryBO;
 import com.sofyun.admin.domain.request.datatable.SaveBO;
 import com.sofyun.admin.domain.request.datatable.UpdateBO;
+import com.sofyun.admin.mapper.DataColumnMapper;
 import com.sofyun.admin.mapper.DataTableMapper;
+import com.sofyun.admin.service.DataColumnService;
 import com.sofyun.admin.service.DataTableService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sofyun.core.util.DBUtils;
@@ -15,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +40,9 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
     private DataTableMapper dataTableMapper;
 
     @Autowired
+    private DataColumnMapper dataColumnMapper;
+
+    @Autowired
     private DBUtils dbUtils;
 
     private QueryWrapper<DataTable> createQuery(DataTable dataTable){
@@ -46,12 +53,26 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
         return queryWrapper;
     }
 
+    @Transactional
     @Override
     public DataTable insert(SaveBO saveBO) {
         DataTable dataTable = new DataTable();
         BeanUtils.copyProperties(saveBO, dataTable);
         dataTable.setId(idUtils.create());
         this.save(dataTable);
+
+        DataColumn dataColumn = new DataColumn();
+        dataColumn.setId(idUtils.create());
+        dataColumn.setDataTable(dataTable.getId());
+        dataColumn.setEnName("id");
+        dataColumn.setLength(64);
+        dataColumn.setScale(0);
+        dataColumn.setIsUnique("1");
+        dataColumn.setIsNullable("0");
+        dataColumn.setName("ID");
+        dataColumn.setType("varchar");
+        dataColumnMapper.insert(dataColumn);
+
         return dataTable;
     }
 

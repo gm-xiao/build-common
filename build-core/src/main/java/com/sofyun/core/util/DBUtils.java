@@ -44,20 +44,24 @@ public class DBUtils implements Serializable {
             // 2.创建数据库
             String sql = "drop database if exists " + model.getEnName();
 
-            //stat.execute(sql);
             logger.info(sql.toString());
+            stat.execute(sql);
             sql = "create database " + model.getEnName() + " CHARACTER SET UTF8";
 
-            //stat.execute(sql);
             logger.info(sql.toString());
+            stat.execute(sql);
 
-            // 3.建表
+            // 3.切换数据库
+            sql = "use".concat(" ").concat(model.getEnName());
+            stat.execute(sql);
+
+            // 4.建表
             for(DBModel.Table table : model.getTables()){
 
                 StringBuffer dropSql = new StringBuffer("DROP TABLE IF EXISTS ");
                 dropSql.append("`".concat(table.getEnName()).concat("`"));
                 logger.info(dropSql.toString());
-                //stat.execute(dropSql.toString());
+                stat.execute(dropSql.toString());
 
                 StringBuffer tableStr = new StringBuffer("CREATE TABLE");
                 tableStr.append(" `".concat(table.getEnName()).concat("` ("));
@@ -69,7 +73,7 @@ public class DBUtils implements Serializable {
 
                 logger.info(tableStr.toString());
 
-                //stat.execute(tableStr.toString());
+                stat.execute(tableStr.toString());
 
             }
 

@@ -51,7 +51,7 @@ public class DataBaseController {
     public ResponseEntity<ResponseBo<DataBaseVO>> save(@RequestBody SaveBO saveBO){
         DataBase dataBase = dataBaseService.insert(saveBO);
         DataBaseVO dataBaseVO = new DataBaseVO();
-        BeanUtils.copyProperties(dataBase, new DataBaseVO());
+        BeanUtils.copyProperties(dataBase, dataBaseVO);
         ResponseBo<DataBaseVO> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());
