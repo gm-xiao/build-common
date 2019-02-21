@@ -2,7 +2,9 @@ package com.sofyun.admin.service.impl;
 
 import com.sofyun.admin.constant.BuildState;
 import com.sofyun.admin.domain.Project;
+import com.sofyun.admin.domain.request.DeleteBO;
 import com.sofyun.admin.domain.request.project.SaveBO;
+import com.sofyun.admin.domain.request.project.UpdateBO;
 import com.sofyun.admin.mapper.ProjectMapper;
 import com.sofyun.admin.service.ProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,6 +30,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Autowired
     private IdUtils idUtils;
 
+    @Autowired
+    private ProjectMapper projectMapper;
+
     @Override
     public Project insert(SaveBO saveBO) {
         Project project = new Project();
@@ -39,4 +44,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         this.save(project);
         return project;
     }
+
+    @Override
+    public Project update(UpdateBO updateBO) {
+        Project project = new Project();
+        BeanUtils.copyProperties(updateBO, project);
+        project.setUpdateTime(LocalDateTime.now());
+        this.save(project);
+        return project;
+    }
+
+    @Override
+    public void delete(DeleteBO deleteBO) {
+        projectMapper.deleteById(deleteBO.getId());
+    }
+
 }

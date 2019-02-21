@@ -8,16 +8,19 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @ClassName SaveBO
+ * @ClassName UpdateBO
  * @Description TODO
  * @Author gm
  * @Date 2019/2/19 17:04
  * @Version 1.0
  **/
 @Data
-@ApiModel(value="保存数据表信息", description="保存数据表信息")
-public class SaveBO implements Serializable {
+@ApiModel(value="更新数据表信息", description="更新数据表信息")
+public class UpdateBO implements Serializable {
     private static final long serialVersionUID = -7132948617603506741L;
+
+    @TableId("id")
+    private String id;
 
     @ApiModelProperty(value = "表名")
     private String name;

@@ -1,7 +1,9 @@
 package com.sofyun.admin.service.impl;
 
 import com.sofyun.admin.domain.DataTable;
+import com.sofyun.admin.domain.request.DeleteBO;
 import com.sofyun.admin.domain.request.datatable.SaveBO;
+import com.sofyun.admin.domain.request.datatable.UpdateBO;
 import com.sofyun.admin.mapper.DataTableMapper;
 import com.sofyun.admin.service.DataTableService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -26,6 +28,9 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
     private IdUtils idUtils;
 
     @Autowired
+    private DataTableMapper dataTableMapper;
+
+    @Autowired
     private DBUtils dbUtils;
 
     @Override
@@ -35,5 +40,18 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
         dataTable.setId(idUtils.create());
         this.save(dataTable);
         return dataTable;
+    }
+
+    @Override
+    public DataTable update(UpdateBO updateBO) {
+        DataTable dataTable = new DataTable();
+        BeanUtils.copyProperties(updateBO, dataTable);
+        this.save(dataTable);
+        return dataTable;
+    }
+
+    @Override
+    public void delete(DeleteBO deleteBO) {
+        dataTableMapper.deleteById(deleteBO.getId());
     }
 }

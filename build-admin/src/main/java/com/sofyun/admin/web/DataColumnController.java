@@ -3,7 +3,9 @@ package com.sofyun.admin.web;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sofyun.admin.domain.DataColumn;
+import com.sofyun.admin.domain.request.DeleteBO;
 import com.sofyun.admin.domain.request.datacolumn.SaveBO;
+import com.sofyun.admin.domain.request.datacolumn.UpdateBO;
 import com.sofyun.admin.service.DataColumnService;
 import com.sofyun.core.constant.ResponseBo;
 import com.sofyun.core.constant.Status;
@@ -63,6 +65,28 @@ public class DataColumnController {
     @PostMapping("/save")
     public ResponseEntity<ResponseBo<Boolean>> save(@RequestBody SaveBO saveBO){
         dataColumnService.insert(saveBO);
+        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+        responseBo.setCode(Status.SUCCESS.getCode());
+        responseBo.setMsg(Status.SUCCESS.getMessage());
+        responseBo.setData(true);
+        return ResponseEntity.ok(responseBo);
+    }
+
+    @ApiOperation(value = "更新数据库表字段")
+    @PostMapping("/update")
+    public ResponseEntity<ResponseBo<Boolean>> update(@RequestBody UpdateBO updateBO){
+        dataColumnService.update(updateBO);
+        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+        responseBo.setCode(Status.SUCCESS.getCode());
+        responseBo.setMsg(Status.SUCCESS.getMessage());
+        responseBo.setData(true);
+        return ResponseEntity.ok(responseBo);
+    }
+
+    @ApiOperation(value = "删除数据库表字段")
+    @PostMapping("/delete")
+    public ResponseEntity<ResponseBo<Boolean>> delete(@RequestBody DeleteBO deleteBO){
+        dataColumnService.delete(deleteBO);
         ResponseBo<Boolean> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());

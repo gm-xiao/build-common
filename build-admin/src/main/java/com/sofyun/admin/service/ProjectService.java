@@ -2,7 +2,9 @@ package com.sofyun.admin.service;
 
 import com.sofyun.admin.domain.Project;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sofyun.admin.domain.request.DeleteBO;
 import com.sofyun.admin.domain.request.project.SaveBO;
+import com.sofyun.admin.domain.request.project.UpdateBO;
 
 /**
  * <p>
@@ -15,5 +17,9 @@ import com.sofyun.admin.domain.request.project.SaveBO;
 public interface ProjectService extends IService<Project> {
 
     Project insert(SaveBO saveBO);
+
+    Project update(UpdateBO updateBO);
+
+    void delete(DeleteBO deleteBO);
 
 }
