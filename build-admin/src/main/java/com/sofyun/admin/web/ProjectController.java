@@ -45,12 +45,12 @@ public class ProjectController {
 
     @ApiOperation(value = "保存项目")
     @PostMapping("/save")
-    public ResponseEntity<ResponseBo<Boolean>> save(@RequestBody SaveBO saveBO){
-        projectService.insert(saveBO);
-        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+    public ResponseEntity<ResponseBo<Project>> save(@RequestBody SaveBO saveBO){
+        Project project = projectService.insert(saveBO);
+        ResponseBo<Project> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());
-        responseBo.setData(true);
+        responseBo.setData(project);
         return ResponseEntity.ok(responseBo);
     }
 

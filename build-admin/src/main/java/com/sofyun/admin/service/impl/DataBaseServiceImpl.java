@@ -77,9 +77,9 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
         // 3.获取表字段信息
         for (DataTable table : dataTables){
             QueryWrapper<DataColumn> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("table_id", dataTable.getId());
+            queryWrapper.eq("data_table", table.getId());
             List<DataColumn> dataColumns = dataColumnService.list(queryWrapper);
-            dataTable.setDataColumns(dataColumns);
+            table.setDataColumns(dataColumns);
         }
 
         // 4.组合数据库对象
@@ -102,7 +102,7 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
         model.setTables(tables);
 
         // 5.初始化数据库
-
+        dbUtils.init(model);
 
     }
 }

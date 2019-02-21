@@ -52,13 +52,13 @@ public class DBModel implements Serializable {
 
         private String enName;
 
-        private Integer precision;
+        private Integer length;
 
         private Integer scale;
 
-        private String unique;
+        private String isUnique;
 
-        private String nullable;
+        private String isNullable;
 
         private String type;
 
