@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @ApiModel(value="初始化数据库", description="初始化数据库")
 public class InitBO implements Serializable {
-    private static final long serialVersionUID = -7132948617603506741L;
+    private static final long serialVersionUID = -7132948617603506751L;
 
     @ApiModelProperty(value = "ID" , required = true)
     private String id;

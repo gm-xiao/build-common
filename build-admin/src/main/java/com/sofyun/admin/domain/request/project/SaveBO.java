@@ -17,7 +17,7 @@ import java.io.Serializable;
 @ApiModel(value="保存项目信息", description="保存项目信息")
 public class SaveBO implements Serializable {
 
-    private static final long serialVersionUID = -2563237834573654635L;
+    private static final long serialVersionUID = -2563237834573659635L;
 
     @ApiModelProperty(value = "项目名称", required = true)
     private String name;

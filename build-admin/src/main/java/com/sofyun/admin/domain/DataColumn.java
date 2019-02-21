@@ -53,7 +53,7 @@ public class DataColumn implements Serializable {
     @TableField("is_unique")
     private String isUnique;
 
-    @ApiModelProperty(value = "是否为空（0.否 1.是）")
+    @ApiModelProperty(value = "是否为空（0.不为空 1.可以为空）")
     @TableField("is_nullable")
     private String isNullable;
 
