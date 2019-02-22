@@ -86,7 +86,7 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
     public DataTable update(UpdateBO updateBO) {
         DataTable dataTable = new DataTable();
         BeanUtils.copyProperties(updateBO, dataTable);
-        this.save(dataTable);
+        this.saveOrUpdate(dataTable);
         return dataTable;
     }
 

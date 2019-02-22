@@ -2,10 +2,12 @@ package com.sofyun.admin.web;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sofyun.admin.domain.DataColumn;
 import com.sofyun.admin.domain.DataTable;
 import com.sofyun.admin.domain.request.DeleteBO;
 import com.sofyun.admin.domain.request.datatable.SaveBO;
 import com.sofyun.admin.domain.request.datatable.UpdateBO;
+import com.sofyun.admin.service.DataColumnService;
 import com.sofyun.admin.service.DataTableService;
 import com.sofyun.core.constant.ResponseBo;
 import com.sofyun.core.constant.Status;
@@ -34,6 +36,9 @@ public class DataTableController {
     @Autowired
     private DataTableService dataTableService;
 
+    @Autowired
+    private DataColumnService dataColumnService;
+
     @ApiOperation(value = "获取数据表对象")
     @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "String", paramType = "query")
     @GetMapping("/json")
@@ -53,6 +58,12 @@ public class DataTableController {
         QueryWrapper<DataTable> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("data_base", database);
         List<DataTable> dataTables = dataTableService.list(queryWrapper);
+        for (DataTable dataTable : dataTables){
+            QueryWrapper<DataColumn> dataColumnQueryWrapper = new QueryWrapper<>();
+            dataColumnQueryWrapper.eq("data_table", dataTable.getId());
+            List<DataColumn> dataColumns = dataColumnService.list(dataColumnQueryWrapper);
+            dataTable.setDataColumns(dataColumns);
+        }
         ResponseBo<List<DataTable>> responseBo = new ResponseBo<>();
         responseBo.setCode(Status.SUCCESS.getCode());
         responseBo.setMsg(Status.SUCCESS.getMessage());

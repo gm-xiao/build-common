@@ -86,7 +86,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         Project project = new Project();
         BeanUtils.copyProperties(updateBO, project);
         project.setUpdateTime(LocalDateTime.now());
-        this.save(project);
+        this.saveOrUpdate(project);
         return project;
     }
 

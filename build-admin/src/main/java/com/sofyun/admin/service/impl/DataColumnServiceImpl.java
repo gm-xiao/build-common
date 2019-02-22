@@ -42,7 +42,7 @@ public class DataColumnServiceImpl extends ServiceImpl<DataColumnMapper, DataCol
     public DataColumn update(UpdateBO updateBO) {
         DataColumn dataColumn = new DataColumn();
         BeanUtils.copyProperties(updateBO, dataColumn);
-        this.save(dataColumn);
+        this.saveOrUpdate(dataColumn);
         return dataColumn;
     }
 
