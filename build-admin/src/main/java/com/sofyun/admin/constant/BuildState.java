@@ -20,9 +20,14 @@ public enum BuildState {
     CREATE_DATE_TABLE("2", "创建表结构"),
 
     /**
+     * 初始化数据库
+     */
+    INIT_DATE_BASE("3", "初始化数据库"),
+
+    /**
      * 构建完成
      */
-    OUT("3", "构建完成"),;
+    OUT("4", "构建完成"),;
 
     private String value;
 

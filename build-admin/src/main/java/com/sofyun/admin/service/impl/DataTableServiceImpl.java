@@ -12,6 +12,7 @@ import com.sofyun.admin.mapper.DataTableMapper;
 import com.sofyun.admin.service.DataColumnService;
 import com.sofyun.admin.service.DataTableService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sofyun.admin.service.ProjectService;
 import com.sofyun.core.util.DBUtils;
 import com.sofyun.core.util.IdUtils;
 import org.apache.commons.lang.StringUtils;
@@ -43,6 +44,9 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
     private DataColumnMapper dataColumnMapper;
 
     @Autowired
+    private ProjectService projectService;
+
+    @Autowired
     private DBUtils dbUtils;
 
     private QueryWrapper<DataTable> createQuery(DataTable dataTable){
@@ -72,6 +76,8 @@ public class DataTableServiceImpl extends ServiceImpl<DataTableMapper, DataTable
         dataColumn.setName("ID");
         dataColumn.setType("varchar");
         dataColumnMapper.insert(dataColumn);
+
+
 
         return dataTable;
     }

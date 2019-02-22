@@ -3,17 +3,21 @@ package com.sofyun.admin.web;
 
 import com.sofyun.admin.domain.Project;
 import com.sofyun.admin.domain.request.DeleteBO;
+import com.sofyun.admin.domain.request.project.InitBO;
 import com.sofyun.admin.domain.request.project.SaveBO;
 import com.sofyun.admin.domain.request.project.UpdateBO;
 import com.sofyun.admin.service.ProjectService;
 import com.sofyun.core.constant.ResponseBo;
 import com.sofyun.core.constant.Status;
+import com.sofyun.core.exception.BaseException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 /**
  * <p>
@@ -75,6 +79,30 @@ public class ProjectController {
         responseBo.setData(true);
         return ResponseEntity.ok(responseBo);
     }
+
+    @ApiOperation(value = "初始化项目")
+    @PostMapping("/init")
+    public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
+        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+        try {
+            projectService.init(initBO);
+            responseBo.setCode(Status.SUCCESS.getCode());
+            responseBo.setMsg(Status.SUCCESS.getMessage());
+            responseBo.setData(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            responseBo.setCode(Status.ERROR.getCode());
+            responseBo.setMsg(Status.ERROR.getMessage());
+            responseBo.setData(false);
+        } catch (BaseException e){
+            e.printStackTrace();
+            responseBo.setCode(e.getCode());
+            responseBo.setMsg(e.getMessage());
+            responseBo.setData(false);
+        }
+        return ResponseEntity.ok(responseBo);
+    }
+
 
 }
 

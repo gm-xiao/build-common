@@ -1,6 +1,7 @@
 package com.sofyun.admin.config;
 
 import com.sofyun.core.util.DBUtils;
+import com.sofyun.core.util.GitUtils;
 import com.sofyun.core.util.IdUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,11 @@ public class WebConfig  implements WebMvcConfigurer {
     @Bean
     public DBUtils getDBUtils(){
         return new DBUtils();
+    }
+
+    @Bean
+    public GitUtils getGitUtils(){
+        return new GitUtils();
     }
 
 }

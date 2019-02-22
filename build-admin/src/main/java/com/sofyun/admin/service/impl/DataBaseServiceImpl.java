@@ -1,6 +1,8 @@
 package com.sofyun.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sofyun.admin.constant.BuildState;
 import com.sofyun.admin.domain.DataBase;
 import com.sofyun.admin.domain.DataColumn;
 import com.sofyun.admin.domain.DataTable;
@@ -8,9 +10,9 @@ import com.sofyun.admin.domain.request.database.InitBO;
 import com.sofyun.admin.domain.request.database.SaveBO;
 import com.sofyun.admin.mapper.DataBaseMapper;
 import com.sofyun.admin.service.DataBaseService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sofyun.admin.service.DataColumnService;
 import com.sofyun.admin.service.DataTableService;
+import com.sofyun.admin.service.ProjectService;
 import com.sofyun.core.constant.BuildConstant;
 import com.sofyun.core.constant.Status;
 import com.sofyun.core.exception.BaseException;
@@ -45,6 +47,9 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
     private DataBaseMapper dataBaseMapper;
 
     @Autowired
+    private ProjectService projectService;
+
+    @Autowired
     private DataTableService dataTableService;
 
     @Autowired
@@ -57,6 +62,9 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
         BeanUtils.copyProperties(saveBO, dataBase);
         dataBase.setId(idUtils.create());
         this.save(dataBase);
+
+        projectService.updateBuildState(dataBase.getProject(), BuildState.CREATE_DATE_BASE.value());
+
         return dataBase;
     }
 
@@ -104,6 +112,9 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
 
         // 5.初始化数据库
         dbUtils.init(model);
+
+        // 6.修改项目状态
+        projectService.updateBuildState(dataBase.getProject(), BuildState.INIT_DATE_BASE.value());
 
     }
 }

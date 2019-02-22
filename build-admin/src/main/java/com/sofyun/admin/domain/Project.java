@@ -58,7 +58,7 @@ public class Project implements Serializable {
     @TableField("status")
     private String status;
 
-    @ApiModelProperty(value = "构建状态(0.初始化 1.创建数据库 2.创建表结构 3.构建完成）")
+    @ApiModelProperty(value = "构建状态(0.初始化 1.创建数据库 2.创建表结构 3.初始化数据库 4.构建完成）")
     @TableField("build_state")
     private String buildState;
 

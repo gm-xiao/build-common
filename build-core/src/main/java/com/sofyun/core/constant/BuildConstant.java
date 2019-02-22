@@ -13,7 +13,7 @@ public class BuildConstant implements Serializable {
 
     private static final long serialVersionUID = 3237017178225667285L;
 
-    public final static String BUILD_PATH = "/build-common/build-admin/src/main/java";
+    public final static String BUILD_PATH = "/build-admin/src/main/java";
 
     public final static String DATA_PATH = "jdbc:mysql://IP:PORT/DATABASE?useUnicode=true&useSSL=false&characterEncoding=utf8";
 
