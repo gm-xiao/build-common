@@ -1,20 +1,28 @@
 package com.sofyun.admin.web;
 
 
+import cn.hutool.core.util.ZipUtil;
 import com.sofyun.admin.domain.DataBase;
+import com.sofyun.admin.domain.Project;
 import com.sofyun.admin.domain.request.database.InitBO;
 import com.sofyun.admin.domain.request.database.SaveBO;
 import com.sofyun.admin.domain.response.database.DataBaseVO;
 import com.sofyun.admin.service.DataBaseService;
 import com.sofyun.core.constant.ResponseBo;
 import com.sofyun.core.constant.Status;
+import com.sofyun.core.exception.BaseException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.nio.charset.Charset;
 
 /**
  * <p>
@@ -31,6 +39,9 @@ public class DataBaseController {
 
     @Autowired
     private DataBaseService dataBaseService;
+
+    @Value("${mysql.install.path}")
+    private String path;
 
     @ApiOperation(value = "获取数据库对象")
     @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "String", paramType = "query")
@@ -75,7 +86,34 @@ public class DataBaseController {
         return ResponseEntity.ok(responseBo);
     }
 
-
+    @ApiOperation(value = "下载数据库")
+    @ApiImplicitParam(name = "id", value = "ID", required = true, dataType = "String", paramType = "query")
+    @GetMapping("/download")
+    public void download(String id, HttpServletResponse response){
+        DataBase dataBase = dataBaseService.getById(id);
+        OutputStream out = null;
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process child =  rt.exec(path +"/bin/mysqldump -uroot  -proot -hlocalhost " + dataBase.getEnName());
+            InputStream in = child.getInputStream();
+            BufferedInputStream fis = new BufferedInputStream(in);
+            byte [] data = new byte[fis.available()];
+            int result = fis.read(data);
+            fis.close();
+            response.setHeader("Content-Disposition","attachment;filename=" + dataBase.getEnName() + ".sql");
+            out = response.getOutputStream();
+            out.write(data);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }
