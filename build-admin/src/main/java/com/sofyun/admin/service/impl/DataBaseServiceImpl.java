@@ -19,6 +19,7 @@ import com.sofyun.core.exception.BaseException;
 import com.sofyun.core.util.DBModel;
 import com.sofyun.core.util.DBUtils;
 import com.sofyun.core.util.IdUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,8 +70,8 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
     }
 
     @Override
-    public void init(InitBO initBO) throws BaseException {
-
+    public Boolean init(InitBO initBO) throws BaseException {
+        Boolean result = false;
         // 1.获取数据库信息
         DataBase dataBase = dataBaseMapper.selectById(initBO.getId());
         if (null == dataBase){
@@ -113,8 +114,22 @@ public class DataBaseServiceImpl extends ServiceImpl<DataBaseMapper, DataBase> i
         // 5.初始化数据库
         dbUtils.init(model);
 
-        // 6.修改项目状态
-        projectService.updateBuildState(dataBase.getProject(), BuildState.INIT_DATE_BASE.value());
+        boolean ok = true;
+        while (ok){
+            String status = DBUtils.status.get() + "";
+            if ("4".equals(status)){
+                ok = false;
+            }else if ("5".equals(status)){
+                ok = false;
+                result = true;
+            }
+        }
 
+        // 6.修改项目状态
+        if (result){
+            projectService.updateBuildState(dataBase.getProject(), BuildState.INIT_DATE_BASE.value());
+        }
+
+        return result;
     }
 }

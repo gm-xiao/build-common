@@ -25,8 +25,13 @@ public class DBUtils implements Serializable {
 
     private final static Logger logger = Logger.getLogger("DBUtils");
 
-    @Async
+    /**
+     * 执行状态 0.开始 1.创建连接 2.建库完成 3.建表完成 4.异常 5.完成
+     */
+    public static ThreadLocal<Integer> status = new ThreadLocal<>();
+
     public void init(DBModel model){
+        DBUtils.status.set(0);
         Connection conn = null;
         Statement stat = null;
         try {
@@ -40,6 +45,7 @@ public class DBUtils implements Serializable {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(jdbcUrl);
             stat = conn.createStatement();
+            DBUtils.status.set(1);
 
             // 2.创建数据库
             String sql = "drop database if exists " + model.getEnName();
@@ -50,6 +56,7 @@ public class DBUtils implements Serializable {
 
             logger.info(sql.toString());
             stat.execute(sql);
+            DBUtils.status.set(2);
 
             // 3.切换数据库
             sql = "use".concat(" ").concat(model.getEnName());
@@ -76,11 +83,14 @@ public class DBUtils implements Serializable {
                 stat.execute(tableStr.toString());
 
             }
+            DBUtils.status.set(3);
 
         } catch (Exception e) {
             e.printStackTrace();
+            DBUtils.status.set(4);
         } finally {
             close(conn, stat);
+            DBUtils.status.set(5);
         }
     }
 

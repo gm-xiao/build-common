@@ -23,6 +23,6 @@ public interface DataBaseService extends IService<DataBase> {
      */
     DataBase insert(SaveBO saveBO);
 
-    void init(InitBO initBO) throws BaseException;
+    Boolean init(InitBO initBO) throws BaseException;
 
 }
