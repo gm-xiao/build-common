@@ -105,7 +105,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
-    public void init(InitBO initBO) throws IOException {
+    public Boolean init(InitBO initBO) throws IOException {
+
+        Boolean result = false;
 
         // 1.获取基本信息
         Project project = projectMapper.selectById(initBO.getId());
@@ -139,6 +141,21 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 .password(dataBase.getPassword())
                 .build();
         generatorUtils.run();
+
+        // 4.判断代码生成状态
+        boolean ok = true;
+        while (ok){
+            String status = GeneratorUtils.status.get() + "";
+            if ("0".equals(status)){
+                ok = false;
+                result = false;
+            }else if ("1".equals(status)){
+                ok = false;
+                result = true;
+            }
+        }
+
+        return result;
 
     }
 }

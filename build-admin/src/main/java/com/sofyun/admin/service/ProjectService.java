@@ -27,6 +27,6 @@ public interface ProjectService extends IService<Project> {
 
     void updateBuildState(String id, String buildState);
 
-    void init(InitBO initBO) throws IOException;
+    Boolean init(InitBO initBO) throws IOException;
 
 }

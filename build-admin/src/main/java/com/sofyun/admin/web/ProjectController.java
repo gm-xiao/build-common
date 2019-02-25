@@ -91,10 +91,10 @@ public class ProjectController {
     public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
         ResponseBo<Boolean> responseBo = new ResponseBo<>();
         try {
-            projectService.init(initBO);
+            Boolean result = projectService.init(initBO);
             responseBo.setCode(Status.SUCCESS.getCode());
             responseBo.setMsg(Status.SUCCESS.getMessage());
-            responseBo.setData(true);
+            responseBo.setData(result);
         } catch (IOException e) {
             e.printStackTrace();
             responseBo.setCode(Status.ERROR.getCode());
@@ -116,17 +116,18 @@ public class ProjectController {
         Project project = projectService.getById(id);
         OutputStream out = null;
         try {
-            response.getOutputStream();
             String path = localPath + project.getEnName();
             File file = new File(path);
             if (!file.exists()) {
                 throw new BaseException(Status.ERROR.getCode(), "项目不存在");
             }
             ZipUtil.zip(path);
-            BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file.getPath()));
+            BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file.getPath() + ".zip"));
             byte [] data = new byte[fis.available()];
             int result = fis.read(data);
             fis.close();
+            response.setHeader("Content-Disposition","attachment;filename=" + project.getEnName() + ".zip");
+            out = response.getOutputStream();
             out.write(data);
             out.flush();
         } catch (IOException e) {

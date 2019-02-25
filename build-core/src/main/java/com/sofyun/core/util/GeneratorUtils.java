@@ -32,6 +32,8 @@ public class GeneratorUtils implements Serializable {
 
     private String password;
 
+    public static ThreadLocal<Integer> status = new ThreadLocal<>();
+
     private GlobalConfig globalConfig(){
         GlobalConfig global = new GlobalConfig();
         global.setOutputDir(outputDir);
@@ -84,27 +86,35 @@ public class GeneratorUtils implements Serializable {
 
     public void run(){
 
-        AutoGenerator autoGenerator = new AutoGenerator();
+        try {
+            AutoGenerator autoGenerator = new AutoGenerator();
 
-        // 1.全局配置
-        autoGenerator.setGlobalConfig(globalConfig());
+            // 1.全局配置
+            autoGenerator.setGlobalConfig(globalConfig());
 
-        // 2.数据源配置
-        autoGenerator.setDataSource(dataSource());
+            // 2.数据源配置
+            autoGenerator.setDataSource(dataSource());
 
-        // 3.包名配置
-        autoGenerator.setPackageInfo(packageConfig());
+            // 3.包名配置
+            autoGenerator.setPackageInfo(packageConfig());
 
-        // 4.表策略配置
-        autoGenerator.setStrategy(strategy());
+            // 4.表策略配置
+            autoGenerator.setStrategy(strategy());
 
-        // 5.配置模板
-        TemplateConfig templateConfig = new TemplateConfig();
-        autoGenerator.setTemplate(templateConfig);
-        autoGenerator.setTemplateEngine(new VelocityTemplateEngine());
+            // 5.配置模板
+            TemplateConfig templateConfig = new TemplateConfig();
+            autoGenerator.setTemplate(templateConfig);
+            autoGenerator.setTemplateEngine(new VelocityTemplateEngine());
 
-        // 6.执行
-        autoGenerator.execute();
+            // 6.执行
+            autoGenerator.execute();
+
+            status.set(1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            status.set(0);
+        }
 
     }
 
