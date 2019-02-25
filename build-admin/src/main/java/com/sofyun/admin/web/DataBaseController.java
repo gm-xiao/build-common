@@ -62,11 +62,16 @@ public class DataBaseController {
     @ApiOperation(value = "初始化数据库")
     @PostMapping("/init")
     public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
-        dataBaseService.init(initBO);
         ResponseBo<Boolean> responseBo = new ResponseBo<>();
-        responseBo.setCode(Status.SUCCESS.getCode());
-        responseBo.setMsg(Status.SUCCESS.getMessage());
-        responseBo.setData(true);
+        Boolean result = dataBaseService.init(initBO);
+        responseBo.setData(result);
+        if (result){
+            responseBo.setCode(Status.SUCCESS.getCode());
+            responseBo.setMsg(Status.SUCCESS.getMessage());
+        }else {
+            responseBo.setCode(Status.ERROR.getCode());
+            responseBo.setMsg(Status.ERROR.getMessage());
+        }
         return ResponseEntity.ok(responseBo);
     }
 
