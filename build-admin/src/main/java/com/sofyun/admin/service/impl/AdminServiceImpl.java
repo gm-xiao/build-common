@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private TokenUtil tokenUtil;
 
-    @Value("${jwt.tokenHead}")
+    @Value("${auth.tokenHead}")
     private String tokenHead;
 
     @Override

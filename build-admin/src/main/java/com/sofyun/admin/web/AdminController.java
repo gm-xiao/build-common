@@ -37,7 +37,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @Value("${jwt.header}")
+    @Value("${auth.header}")
     private String tokenHeader;
 
     @ApiOperation(value = "初始化项目")
