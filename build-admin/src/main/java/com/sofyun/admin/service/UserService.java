@@ -13,4 +13,20 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    User insert(User user);
+
+    /**
+     * 根据手机号查询用户
+     * @param mobile
+     * @return
+     */
+    User findByMobile(String mobile);
+
+    /**
+     * 根据编码查询用户
+     * @param code
+     * @return
+     */
+    User findByCode(String code);
+
 }
