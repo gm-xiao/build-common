@@ -40,27 +40,27 @@ public class AdminController {
     @Value("${auth.header}")
     private String tokenHeader;
 
-    @ApiOperation(value = "初始化项目")
-    @PostMapping("/init")
-    public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
-        String dataUrl = BuildConstant.DATA_PATH
-                .replace("IP", initBO.getIp())
-                .replace("PORT", initBO.getProt().toString())
-                .replace("DATABASE", initBO.getDataBase());
-        GeneratorUtils generatorUtils = new GeneratorBuilder()
-                .outputDir(initBO.getOutputDir() + BuildConstant.BUILD_PATH)
-                .author(initBO.getAuthor())
-                .dataUrl(dataUrl)
-                .driverName("com.mysql.jdbc.Driver")
-                .username(initBO.getUsername())
-                .password(initBO.getPassword())
-                .build();
-        generatorUtils.run();
-        ResponseBo<Boolean> responseBo = new ResponseBo<>();
-        responseBo.setCode(HttpStatus.OK.value());
-        responseBo.setData(true);
-        return ResponseEntity.ok(responseBo);
-    }
+//    @ApiOperation(value = "初始化项目")
+//    @PostMapping("/init")
+//    public ResponseEntity<ResponseBo<Boolean>> init(@RequestBody InitBO initBO){
+//        String dataUrl = BuildConstant.DATA_PATH
+//                .replace("IP", initBO.getIp())
+//                .replace("PORT", initBO.getProt().toString())
+//                .replace("DATABASE", initBO.getDataBase());
+//        GeneratorUtils generatorUtils = new GeneratorBuilder()
+//                .outputDir(initBO.getOutputDir() + BuildConstant.BUILD_PATH)
+//                .author(initBO.getAuthor())
+//                .dataUrl(dataUrl)
+//                .driverName("com.mysql.jdbc.Driver")
+//                .username(initBO.getUsername())
+//                .password(initBO.getPassword())
+//                .build();
+//        generatorUtils.run();
+//        ResponseBo<Boolean> responseBo = new ResponseBo<>();
+//        responseBo.setCode(HttpStatus.OK.value());
+//        responseBo.setData(true);
+//        return ResponseEntity.ok(responseBo);
+//    }
 
     @ApiOperation(value = "登录")
     @PostMapping("/login")
